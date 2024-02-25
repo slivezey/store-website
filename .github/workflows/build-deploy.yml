@@ -23,7 +23,7 @@ jobs:
         run: npm ci
 
       - name: Run unit tests
-        run: npm ci
+        run: npm run test:prod
 
       - name: Build and Push Created Docker Image to Docker Repo
         uses: mr-smithers-excellent/docker-build-push@v6
