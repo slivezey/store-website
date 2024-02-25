@@ -1,0 +1,108 @@
+<div class="container align-top w-75 p-5 min-vh-100">
+  <h3>Sign Up for a Steve's Store Account</h3>
+  <form
+    class="p-5"
+    [formGroup]="signUpForm"
+    (ngSubmit)="$event.preventDefault(); submitForm()"
+  >
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input
+        id="username"
+        type="text"
+        class="form-control w-50"
+        autocomplete="name"
+        formControlName="username"
+      />
+      <div class="text-danger small" *ngIf="checkField('username')">
+        <p *ngIf="signUpForm.get('username')?.hasError('required')">
+          Username is required.
+        </p>
+        <p *ngIf="signUpForm.get('username')?.hasError('minlength')">
+          Username must be at least five characters in length.
+        </p>
+        <p *ngIf="signUpForm.get('username')?.hasError('whitespace')">
+          Username cannot contain spaces.
+        </p>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="email" class="form-label">Email</label>
+      <input
+        id="email"
+        type="text"
+        class="form-control w-50"
+        autocomplete="email"
+        formControlName="email"
+      />
+      <div class="text-danger small" *ngIf="checkField('email')">
+        <p *ngIf="signUpForm.get('email')?.hasError('required')">
+          Email address is required.
+        </p>
+        <p *ngIf="signUpForm.get('email')?.hasError('email')">
+          Please enter a valid email address.
+        </p>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        id="password"
+        type="password"
+        class="form-control w-50"
+        autocomplete="name"
+        formControlName="password"
+      />
+      <div class="text-danger small" *ngIf="checkField('password')">
+        <p *ngIf="signUpForm.get('password')?.hasError('required')">
+          Password is required.
+        </p>
+        <p *ngIf="signUpForm.get('password')?.hasError('minlength')">
+          Password must be at least five characters in length.
+        </p>
+        <p *ngIf="signUpForm.get('password')?.hasError('whitespace')">
+          Password cannot contain spaces.
+        </p>
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="passwordConfirm" class="form-label">Password</label>
+      <input
+        id="passwordConfirm"
+        type="password"
+        class="form-control w-50"
+        autocomplete="name"
+        formControlName="passwordConfirm"
+      />
+      <div class="text-danger small" *ngIf="checkField('passwordConfirm')">
+        Password confirmation is required.
+      </div>
+      <div
+        class="text-danger small"
+        *ngIf="
+          (signUpForm.get('passwordConfirm')?.dirty ||
+            signUpForm.get('passwordConfirm')?.touched) &&
+          signUpForm.get('password')?.value !=
+            signUpForm.get('passwordConfirm')?.value
+        "
+      >
+        Both passwords must match.
+      </div>
+    </div>
+    <div class="mb-3">
+      <span>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="
+            signUpForm.invalid ||
+            signUpForm.get('password')?.value !=
+              signUpForm.get('passwordConfirm')?.value
+          "
+        >
+          Sign In
+        </button>
+      </span>
+    </div>
+  </form>
+</div>

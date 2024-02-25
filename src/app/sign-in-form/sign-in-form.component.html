@@ -1,0 +1,49 @@
+<div class="container align-top w-75 p-5 min-vh-100">
+  <h3>Sign In to Steve's Store</h3>
+  <form
+    class="p-5"
+    [formGroup]="signInForm"
+    (ngSubmit)="$event.preventDefault(); submitForm()"
+  >
+    <div class="mb-3">
+      <label for="username" class="form-label">Username</label>
+      <input
+        id="username"
+        type="text"
+        class="form-control w-50"
+        autocomplete="name"
+        formControlName="username"
+      />
+      <div class="text-danger small" *ngIf="checkField('username')">
+        Username is required.
+      </div>
+    </div>
+    <div class="mb-3">
+      <label for="password" class="form-label">Password</label>
+      <input
+        id="password"
+        type="password"
+        class="form-control w-50"
+        autocomplete="name"
+        formControlName="password"
+      />
+      <div class="text-danger small" *ngIf="checkField('password')">
+        Password is required.
+      </div>
+    </div>
+    <div class="mb-3">
+      <span>
+        <button
+          type="submit"
+          class="btn btn-primary"
+          [disabled]="signInForm.invalid"
+        >
+          Sign In
+        </button>
+      </span>
+    </div>
+    <div class="mb-3">
+      <p>Not a member yet? <a [routerLink]="['/sign-up']">Sign Up</a></p>
+    </div>
+  </form>
+</div>

@@ -1,0 +1,23 @@
+<li class="nav-item dropdown">
+  <a
+    class="nav-link dropdown-toggle"
+    id="myAccountDropdown"
+    href="#"
+    role="button"
+    data-bs-toggle="dropdown"
+    aria-expanded="true"
+    >My Account</a
+  >
+  <ul class="dropdown-menu" aria-labelledby="myAccountDropdown">
+    <li *ngIf="!signedIn; else signout_link">
+      <a class="dropdown-item" [routerLink]="['/sign-in']">Sign-In</a>
+    </li>
+  </ul>
+</li>
+<ng-template #signout_link>
+  <li>
+    <h6 class="dropdown-header">Welcome, {{ username }}!</h6>
+  </li>
+  <li><hr class="dropdown-divider" /></li>
+  <li><a class="dropdown-item" [routerLink]="['/sign-out']">Sign-Out</a></li>
+</ng-template>
