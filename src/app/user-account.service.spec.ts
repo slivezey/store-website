@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { UserAccountService } from './user-account.service';
+import { API_BASE_URL } from './abstract-api.service';
 
 describe('UserAccountService', () => {
   let service: UserAccountService;
@@ -30,7 +31,7 @@ describe('UserAccountService', () => {
       expect(result).toBeTruthy();
       expect(result).toEqual(true);
     });
-    let request = httpMock.expectOne('/auth/sign-in');
+    let request = httpMock.expectOne(`${API_BASE_URL}/auth/sign-in`);
     expect(request.request.method).toEqual('POST');
     expect(request.request.body.username).toEqual('someuser');
     expect(request.request.body.password).toEqual('password');
@@ -50,7 +51,7 @@ describe('UserAccountService', () => {
     service.signIn('someuser', 'badpassword').subscribe((result: boolean) => {
       expect(result).toEqual(false);
     });
-    let request = httpMock.expectOne('/auth/sign-in');
+    let request = httpMock.expectOne(`${API_BASE_URL}/auth/sign-in`);
     request.error(new ProgressEvent('error'), { status: 400 });
   });
 
@@ -58,7 +59,7 @@ describe('UserAccountService', () => {
     service.signIn('someuser', 'badpassword').subscribe((result: boolean) => {
       expect(result).toEqual(false);
     });
-    let request = httpMock.expectOne('/auth/sign-in');
+    let request = httpMock.expectOne(`${API_BASE_URL}/auth/sign-in`);
     request.error(new ProgressEvent('error'), { status: 0 });
   });
 
@@ -66,7 +67,7 @@ describe('UserAccountService', () => {
     service.signIn('someuser', 'password').subscribe((result: boolean) => {
       expect(result).toEqual(true);
     });
-    let request1 = httpMock.expectOne('/auth/sign-in');
+    let request1 = httpMock.expectOne(`${API_BASE_URL}/auth/sign-in`);
     request1.flush({
       username: 'someuser',
       accessToken: 'dummy-access-token',
@@ -76,7 +77,7 @@ describe('UserAccountService', () => {
     service.signOut().subscribe((result: boolean) => {
       expect(result).toEqual(true);
     });
-    let request2 = httpMock.expectOne('/auth/sign-out');
+    let request2 = httpMock.expectOne(`${API_BASE_URL}/auth/sign-out`);
     request2.flush({});
   });
 
@@ -84,7 +85,7 @@ describe('UserAccountService', () => {
     service.signIn('someuser', 'password').subscribe((result: boolean) => {
       expect(result).toEqual(true);
     });
-    let request1 = httpMock.expectOne('/auth/sign-in');
+    let request1 = httpMock.expectOne(`${API_BASE_URL}/auth/sign-in`);
     request1.flush({
       username: 'someuser',
       accessToken: 'dummy-access-token',
@@ -94,7 +95,7 @@ describe('UserAccountService', () => {
     service.signOut().subscribe((result: boolean) => {
       expect(result).toEqual(false);
     });
-    let request2 = httpMock.expectOne('/auth/sign-out');
+    let request2 = httpMock.expectOne(`${API_BASE_URL}/auth/sign-out`);
     expect(request2.request.headers.get('Authorization')).toEqual('Bearer dummy-access-token');
     request2.error(new ProgressEvent('error'), { status: 500 });
   });
@@ -104,7 +105,7 @@ describe('UserAccountService', () => {
       expect(result).toBeTruthy();
       expect(result.success).toEqual(true);
     });
-    let request = httpMock.expectOne('/auth/sign-up');
+    let request = httpMock.expectOne(`${API_BASE_URL}/auth/sign-up`);
     request.flush({
       message: 'User created successfully'
     });
@@ -115,7 +116,7 @@ describe('UserAccountService', () => {
       expect(result).toBeTruthy();
       expect(result.success).toEqual(false);
     });
-    let request = httpMock.expectOne('/auth/sign-up');
+    let request = httpMock.expectOne(`${API_BASE_URL}/auth/sign-up`);
     request.error(new ProgressEvent('error'), { status: 400 });
   });
 
