@@ -19,9 +19,10 @@ export abstract class AbstractApiService {
       options.params = urlParams;
     }
     if (headers) {
-      headers.keys().forEach(key => {
-        options.headers = options.headers.set(key, headers.get(key));
-      });
+      if (!options.headers) {
+        options.headers = new HttpHeaders();
+      }
+      headers.keys().forEach(k => options.headers = options.headers.set(k, headers.get(k)));
     }
 
     return new Observable<T>(observer => {
@@ -92,9 +93,7 @@ export abstract class AbstractApiService {
 
   private getStandardOptions(includeAccessToken: boolean = true): any {
     let options: any = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json'
-      })
+      headers: new HttpHeaders()
     };
 
     if (includeAccessToken) {
@@ -104,6 +103,7 @@ export abstract class AbstractApiService {
         options.headers = options.headers.set('Authorization', `Bearer ${accessToken}`);
       }
     }
+    options.headers = options.headers.set('Content-Type', 'application/json');
     return options;
   }
 

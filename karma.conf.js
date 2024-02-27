@@ -27,7 +27,7 @@ module.exports = function (config) {
       subdir: ".",
       reporters: [{ type: "html" }, { type: "text-summary" }],
       check: {
-        emitWarning: true,
+        emitWarning: false,
         global: {
           statements: 80,
           branches: 80,

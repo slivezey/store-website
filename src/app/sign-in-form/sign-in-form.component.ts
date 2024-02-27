@@ -13,6 +13,7 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class SignInFormComponent {
 
+  signedIn = true;
   signInForm = new FormGroup({
     username: new FormControl('', Validators.required),
     password: new FormControl('', Validators.required),
@@ -31,6 +32,7 @@ export class SignInFormComponent {
         } else {
           alert('Unable to login.  Please check your credentials.');
         }
+        this.signedIn = success;
       }
     });
   }
@@ -38,7 +40,7 @@ export class SignInFormComponent {
   checkField(fieldName: string): boolean {
     let field = this.signInForm.get(fieldName);
 
-    return (field == null) ? false : field?.invalid && (field?.dirty || field?.touched);
+    return field!.invalid && (field!.dirty || field!.touched);
   }
 
 }

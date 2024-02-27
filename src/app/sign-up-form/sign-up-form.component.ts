@@ -13,6 +13,7 @@ import { NgIf } from '@angular/common';
 })
 export class SignUpFormComponent {
 
+  signedUp = false;
   signUpForm = new FormGroup({
     username: new FormControl('', [Validators.required, Validators.minLength(5), NoWhitespaceValidator()]),
     email: new FormControl('', [Validators.required, Validators.email]),
@@ -35,6 +36,7 @@ export class SignUpFormComponent {
         } else {
           alert(result.message);
         }
+        this.signedUp = result.success;
       }
     });
   }
@@ -42,7 +44,7 @@ export class SignUpFormComponent {
   checkField(fieldName: string): boolean {
     let field = this.signUpForm.get(fieldName);
 
-    return (field == null) ? false : field?.invalid && (field?.dirty || field?.touched);
+    return field!.invalid && (field!.dirty || field!.touched);
   }
 
 }

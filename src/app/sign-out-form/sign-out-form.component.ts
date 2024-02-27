@@ -11,17 +11,19 @@ import { Router } from '@angular/router';
 })
 export class SignOutFormComponent {
 
+  signOutConfirmed = false;
+
   constructor(private userService: UserAccountService, private router: Router) {}
 
   signOut() {
     this.userService.signOut().subscribe({
       next: (success) => {
-        console.log(success);
         if (success) {
           this.router.navigate(['']);
         } else {
           alert('An error occurred.  Unable to sign out.');
         }
+        this.signOutConfirmed = success;
       }
     });
   }
